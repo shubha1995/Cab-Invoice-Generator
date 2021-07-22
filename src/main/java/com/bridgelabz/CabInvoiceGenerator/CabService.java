@@ -1,24 +1,31 @@
 package com.bridgelabz.CabInvoiceGenerator;
 
 public class CabService {
+	
+
+    private static final int COST_PER_TIME = 1;
+    private static final double MIN_COST_PER_KM = 10;
+    private static final  double MIN_FARE = 5;
 
 	public static double invoiceGenrator(double distance, int time) {
 
-		double totalFare = 0.0;
-		if (distance < 1 && time <= 10) {
-			totalFare = 5.00;
-		} else {
-			totalFare = distance * 10 + time;
-
-		}
+	double totalFare = distance  *MIN_COST_PER_KM + time * COST_PER_TIME;
+	if (totalFare < MIN_FARE)
+		return MIN_FARE;
 		
-
 		return totalFare;
 	}
 
-	public static void main(String[] args) {
-		System.out.println("Welcome to CAB INVOICE GENERATOR");
-
+	public double invoiceGenrator(Rides[] rides) {
+		double totalFare = 0;
+		for (Rides ride : rides) {
+			totalFare += this.invoiceGenrator(ride.distance, ride.time);
+			
+		}
+		return totalFare;
+		
 	}
+
+	
 
 }
