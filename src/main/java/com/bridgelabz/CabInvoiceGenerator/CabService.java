@@ -9,20 +9,17 @@ public class CabService {
 
 	public static double invoiceGenrator(double distance, int time) {
 
-	double totalFare = distance  *MIN_COST_PER_KM + time * COST_PER_TIME;
-	if (totalFare < MIN_FARE)
-		return MIN_FARE;
-		
-		return totalFare;
+	double totalFare = distance * MIN_COST_PER_KM + time * COST_PER_TIME;
+	return Math.max(totalFare, MIN_FARE);
 	}
 
-	public double invoiceGenrator(Rides[] rides) {
+	public InvoiceSumary invoiceGenrator(Rides[] rides) {
 		double totalFare = 0;
 		for (Rides ride : rides) {
 			totalFare += this.invoiceGenrator(ride.distance, ride.time);
 			
 		}
-		return totalFare;
+		return new InvoiceSumary(rides.length, totalFare);
 		
 	}
 
